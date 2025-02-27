@@ -1,53 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown to Summer Vacation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f2f2f2;
+<div class="timer" id="countdown"></div>
+.timer {
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+    text-align: center;
+    padding: 20px;
+    background-color: #ffeb3b;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    display: inline-block;
+}
+<script>
+    function updateCountdown() {
+        const summerDate = new Date("May 31, 2025 00:00:00").getTime();
+        const now = new Date().getTime();
+        const timeRemaining = summerDate - now;
+
+        if (timeRemaining <= 0) {
+            document.getElementById("countdown").innerHTML = "Summer Vacation is Here!";
+            clearInterval(interval);
+        } else {
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
-        .timer {
-            text-align: center;
-            font-size: 2em;
-            padding: 20px;
-            background-color: #ffeb3b;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
-<body>
+    }
 
-    <div class="timer" id="countdown"></div>
-
-    <script>
-        function updateCountdown() {
-            const summerDate = new Date("May 31, 2025 00:00:00").getTime();
-            const now = new Date().getTime();
-            const timeRemaining = summerDate - now;
-
-            if (timeRemaining <= 0) {
-                document.getElementById("countdown").innerHTML = "Summer Vacation is Here!";
-                clearInterval(interval);
-            } else {
-                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }
-        }
-
-        const interval = setInterval(updateCountdown, 1000);
-    </script>
-
-</body>
-</html>
+    const interval = setInterval(updateCountdown, 1000);
+</script>
