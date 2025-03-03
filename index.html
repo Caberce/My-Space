@@ -1,120 +1,89 @@
-<canvas id="pong" width="600" height="400"></canvas>
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #000;
-}
-
-canvas {
-    border: 1px solid #fff;
-}
-<script>
-    // Set up the canvas
-    const canvas = document.getElementById("pong");
-    const ctx = canvas.getContext("2d");
-
-    // Create the paddle
-    const paddleWidth = 10, paddleHeight = 100;
-    const leftPaddle = { x: 0, y: canvas.height / 2 - paddleHeight / 2, width: paddleWidth, height: paddleHeight, dy: 0 };
-    const rightPaddle = { x: canvas.width - paddleWidth, y: canvas.height / 2 - paddleHeight / 2, width: paddleWidth, height: paddleHeight, dy: 0 };
-
-    // Create the ball
-    const ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 10, speed: 5, dx: 5, dy: 5 };
-
-    // Game control
-    const upKey = 38, downKey = 40, wKey = 87, sKey = 83;
-
-    // Draw paddles
-    function drawPaddle(paddle) {
-        ctx.fillStyle = "#fff";
-        ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
-    }
-
-    // Draw the ball
-    function drawBall() {
-        ctx.fillStyle = "#fff";
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    // Move paddles
-    function movePaddle(paddle) {
-        paddle.y += paddle.dy;
-        if (paddle.y < 0) paddle.y = 0;
-        if (paddle.y + paddle.height > canvas.height) paddle.y = canvas.height - paddle.height;
-    }
-
-    // Update the ball's position
-    function updateBall() {
-        ball.x += ball.dx;
-        ball.y += ball.dy;
-
-        // Ball collision with top and bottom walls
-        if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
-            ball.dy *= -1;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal website of [Your Name]">
+    <title>[Your Name]'s Personal Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
-
-        // Ball collision with paddles
-        if (ball.x - ball.radius < leftPaddle.x + leftPaddle.width && ball.y > leftPaddle.y && ball.y < leftPaddle.y + leftPaddle.height) {
-            ball.dx *= -1;
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
         }
-        if (ball.x + ball.radius > rightPaddle.x && ball.y > rightPaddle.y && ball.y < rightPaddle.y + rightPaddle.height) {
-            ball.dx *= -1;
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
         }
-
-        // Ball out of bounds (left or right)
-        if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
-            ball.x = canvas.width / 2;
-            ball.y = canvas.height / 2;
-            ball.dx *= -1;
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
         }
-    }
-
-    // Handle user input
-    function movePlayer() {
-        // Left paddle controls (W and S keys)
-        if (leftPaddle.dy) {
-            leftPaddle.y += leftPaddle.dy;
-            if (leftPaddle.y < 0) leftPaddle.y = 0;
-            if (leftPaddle.y + leftPaddle.height > canvas.height) leftPaddle.y = canvas.height - leftPaddle.height;
+        nav a:hover {
+            background-color: #575757;
         }
-
-        // Right paddle controls (Arrow Up and Arrow Down keys)
-        if (rightPaddle.dy) {
-            rightPaddle.y += rightPaddle.dy;
-            if (rightPaddle.y < 0) rightPaddle.y = 0;
-            if (rightPaddle.y + rightPaddle.height > canvas.height) rightPaddle.y = canvas.height - rightPaddle.height;
+        section {
+            padding: 20px;
+            margin: 20px;
         }
-    }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
 
-    // Game loop
-    function gameLoop() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        movePaddle(leftPaddle);
-        movePaddle(rightPaddle);
-        updateBall();
-        drawPaddle(leftPaddle);
-        drawPaddle(rightPaddle);
-        drawBall();
-    }
+    <header>
+        <h1>Welcome to [Your Name]'s Website</h1>
+        <p>About me, my work, and more!</p>
+    </header>
 
-    // Keyboard event listeners
-    document.addEventListener("keydown", (e) => {
-        if (e.keyCode === wKey) leftPaddle.dy = -5; // W key
-        if (e.keyCode === sKey) leftPaddle.dy = 5;  // S key
-        if (e.keyCode === upKey) rightPaddle.dy = -5;  // Up arrow
-        if (e.keyCode === downKey) rightPaddle.dy = 5; // Down arrow
-    });
+    <nav>
+        <a href="#about">About Me</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-    document.addEventListener("keyup", (e) => {
-        if (e.keyCode === wKey || e.keyCode === sKey) leftPaddle.dy = 0;
-        if (e.keyCode === upKey || e.keyCode === downKey) rightPaddle.dy = 0;
-    });
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hello! I am [Your Name], a passionate [Your Profession]. I love [Brief Description of Interests and Background].</p>
+    </section>
 
-    // Start the game loop
-    setInterval(gameLoop, 1000 / 60);
-</script>
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <p>Check out some of my recent work:</p>
+        <ul>
+            <li><a href="[link-to-project1]">Project 1</a></li>
+            <li><a href="[link-to-project2]">Project 2</a></li>
+            <li><a href="[link-to-project3]">Project 3</a></li>
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>If you'd like to get in touch, feel free to email me at <a href="mailto:[your-email@example.com]">[your-email@example.com]</a></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 [Your Name]. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
