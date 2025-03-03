@@ -13,30 +13,45 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+        /* Styling for header */
         header {
             background-color: #333;
             color: white;
             text-align: center;
             padding: 1rem 0;
         }
+        /* Styling for navigation bar */
         nav {
+            background-color: #444;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
-            background-color: #444;
+        }
+        nav ul li {
+            margin: 0 15px;
         }
         nav a {
             color: white;
             padding: 14px 20px;
             text-decoration: none;
-            text-align: center;
+            display: block;
         }
         nav a:hover {
             background-color: #575757;
         }
+        /* Section styling */
         section {
             padding: 20px;
             margin: 20px;
         }
+        /* Footer styling */
         footer {
             background-color: #333;
             color: white;
@@ -55,10 +70,13 @@
         <p>About me, my work, and more!</p>
     </header>
 
+    <!-- Navigation Bar -->
     <nav>
-        <a href="#about">About Me</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#contact">Contact</a>
+        <ul>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
 
     <section id="about">
