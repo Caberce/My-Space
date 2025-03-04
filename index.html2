@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown to Summer Vacation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="countdown">
+    <h1>Countdown to Summer Vacation</h1>
+    <p id="timer"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#countdown {
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  color: #2a9df4;
+}
+
+#timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff6347;
+}
+// Set the date we're counting down to
+const summerVacationDate = new Date("June 15, 2025 00:00:00").getTime();
+
+// Update the countdown every 1 second
+const countdown = setInterval(function() {
+
+  // Get the current date and time
+  const now = new Date().getTime();
+
+  // Find the distance between now and the target date
+  const distance = summerVacationDate - now;
+
+  // Time calculations for days, hours, minutes, and seconds
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result
+  document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+  // If the countdown is over, display a message
+  if (distance < 0) {
+    clearInterval(countdown);
+    document.getElementById("timer").innerHTML = "Summer Vacation has arrived!";
+  }
+}, 1000);
