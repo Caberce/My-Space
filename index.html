@@ -68,43 +68,6 @@
     </style>
 </head>
 <body>
-    <h1>Countdown to Summer Vacation!</h1>
-    <div id="countdown"></div>
-
-    <script>
-        // Set the date we're counting down to
-        var countDownDate = new Date("May 30, 2025 00:00:00").getTime();
-
-        // Update the countdown every 1 second
-        var x = setInterval(function() {
-
-            // Get the current date and time
-            var now = new Date().getTime();
-            
-            // Find the distance between now and the countdown date
-            var distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes, and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Display the result in the element with id="countdown"
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
-
-            // If the countdown is finished, display a message
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "It's Summer Vacation Time!";
-            }
-        }, 1000);
-    </script>
-</body>
-</html>
-        }
-
         main h2 {
             font-size: 2.5em;
             margin-top: 0;
@@ -364,3 +327,71 @@
     </script>
 </body>
 </html>
+import pygame
+import random
+
+pygame.init()
+
+# Set up screen
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Pong Game")
+
+# Game variables
+score_left = 0
+score_right = 0
+font = pygame.font.SysFont("comicsans", 30)
+
+# Ball class
+class Ball:
+    def __init__(self):
+        self.rect = pygame.Rect(screen_width // 2, screen_height // 2, 15, 15)
+        self.x_speed = 5 * random.choice((1, -1))
+        self.y_speed = 5 * random.choice((1, -1))
+
+    def move(self):
+        self.rect.x += self.x_speed
+        self.rect.y += self.y_speed
+
+        if self.rect.top <= 0 or self.rect.bottom >= screen_height:
+            self.y_speed = -self.y_speed
+
+# Create ball
+ball = Ball()
+
+# Game loop
+running = True
+while running:
+    screen.fill((0, 0, 0))  # Black background
+
+    # Check for events (close window)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Move the ball
+    ball.move()
+
+    # Detect scoring
+    if ball.rect.left <= 0:  # Left player scores
+        score_right += 1
+        ball = Ball()  # Reset the ball
+    elif ball.rect.right >= screen_width:  # Right player scores
+        score_left += 1
+        ball = Ball()  # Reset the ball
+
+    # Render the score
+    score_text = font.render(f"{score_left} - {score_right}", True, (255, 255, 255))
+    screen.blit(score_text, (screen_width // 2 - score_text.get_width() // 2, 20))
+
+    # Draw the ball
+    pygame.draw.rect(screen, (255, 255, 255), ball.rect)
+
+    # Update the display
+    pygame.display.flip()
+
+    # Set the frame rate
+    pygame.time.Clock().tick(60)
+
+pygame.quit()
